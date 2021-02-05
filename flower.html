@@ -1,0 +1,479 @@
+<!DOCTYPE >
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="flo.css"  />
+<link rel="icon" type="favicon" href="img/favicon.ico"  />
+
+<script>
+function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
+    }
+}
+
+var products = [];
+    var cart = [];
+
+        function addProduct() {
+            var productID = document.getElementById("productID").value;
+            var product_desc = document.getElementById("product_desc").value;
+            var qty = document.getElementById("quantity").value;
+            var price = document.getElementById("price").value;
+
+            var newProduct = {
+                product_id: null,
+                product_desc: null,
+                product_qty: 0,
+                product_price: 0.00,
+            };
+            newProduct.product_id = productID;
+            newProduct.product_desc = product_desc;
+            newProduct.product_qty = qty;
+            newProduct.product_price = price;
+
+
+            products.push(newProduct);
+
+
+            var html = "<table border='1|1' >";
+            html += "<td>Product ID</td>";
+            html += "<td>Product Description</td>";
+            html += "<td>Quantity</td>";
+            html += "<td>Price</td>";
+            html += "<td>Action</td>";
+            for (var i = 0; i < products.length; i++) {
+                html += "<tr>";
+                html += "<td>" + products[i].product_id + "</td>";
+                html += "<td>" + products[i].product_desc + "</td>";
+                html += "<td>" + products[i].product_qty + "</td>";
+                html += "<td>" + products[i].product_price + "</td>";
+                html += "<td><button type='submit' onClick='deleteProduct(\"" + products[i].product_id + "\", this);'/>Delete Item</button> &nbsp <button type='submit' onClick='addCart(\"" + products[i].product_id + "\", this);'/>Add to Cart</button></td>";
+                html += "</tr>";
+            }
+            html += "</table>";
+            document.getElementById("demo").innerHTML = html;
+
+            document.getElementById("resetbtn").click()
+        }
+        function deleteProduct(product_id, e) {
+            e.parentNode.parentNode.parentNode.removeChild(e.parentNode.parentNode);
+            for (var i = 0; i < products.length; i++) {
+                if (products[i].product_id == product_id) {
+                    // DO NOT CHANGE THE 1 HERE
+                    products.splice(i, 1);
+                }
+            }
+        }
+
+        function addCart(product_id) {
+
+            for (var i = 0; i < products.length; i++) {
+                if (products[i].product_id == product_id) {
+                    var cartItem = null;
+                    for (var k = 0; k < cart.length; k++) {
+                        if (cart[k].product.product_id == products[i].product_id) {
+                            cartItem = cart[k];
+                            cart[k].product_qty++;
+                            break;
+                        }
+                    }
+                    if (cartItem == null) {
+                        
+                        var cartItem = {
+                            product: products[i],
+                            product_qty: products[i].product_qty 
+                        };
+                        cart.push(cartItem);
+                    }
+                }
+            }
+
+            renderCartTable();
+
+        }
+
+        function renderCartTable() {
+        var html = '';
+        var ele = document.getElementById("demo2");
+        ele.innerHTML = ''; 
+
+        html += "<table id='tblCart' border='1|1'>";
+        html += "<tr><td>Product ID</td>";
+        html += "<td>Product Description</td>";
+        html += "<td>Quantity</td>";
+        html += "<td>Price</td>";
+        html += "<td>Total</td>";
+        html += "<td>Action</td></tr>";
+        var GrandTotal = 0;
+        for (var i = 0; i < cart.length; i++) {
+            html += "<tr>";
+            html += "<td>" + cart[i].product.product_id + "</td>";
+            html += "<td>" + cart[i].product.product_desc + "</td>";
+            html += "<td>" + cart[i].product_qty + "</td>";
+            html += "<td>" + cart[i].product.product_price + "</td>";
+            html += "<td>" + parseFloat(cart[i].product.product_price) * parseInt(cart[i].product_qty) + "</td>";
+            html += "<td><button type='submit' onClick='subtractQuantity(\"" + cart[i].product.product_id + "\", this);'/>Subtract Quantity</button> &nbsp<button type='submit' onClick='addQuantity(\"" + cart[i].product.product_id + "\", this);'/>Add Quantity</button> &nbsp<button type='submit' onClick='removeItem(\"" + cart[i].product.product_id + "\", this);'/>Remove Item</button></td>";
+            html += "</tr>";
+
+           GrandTotal += parseFloat(cart[i].product.product_price) * parseInt(cart[i].product_qty);            
+
+        }
+        document.getElementById('demo3').innerHTML = GrandTotal;
+        html += "</table>";
+        ele.innerHTML = html;
+    }
+
+
+        function subtractQuantity(product_id)
+        {
+            
+            for (var i = 0; i < cart.length; i++) {
+                if (cart[i].product.product_id == product_id) {
+                    cart[i].product_qty--;
+                }
+
+                if (cart[i].product_qty == 0) {
+                    cart.splice(i,1);
+                }
+        
+            }
+            renderCartTable();
+        }
+        function addQuantity(product_id)
+        {
+            
+            for (var i = 0; i < cart.length; i++) {
+                if (cart[i].product.product_id == product_id) {
+                    cart[i].product_qty++;
+                }  
+            }
+            renderCartTable();
+        }
+        function removeItem(product_id)
+        {
+            
+            for (var i = 0; i < cart.length; i++) {
+                if (cart[i].product.product_id == product_id) {
+                    cart.splice(i,1);
+                }
+
+            }
+            renderCartTable();
+        }
+function show_alert(){
+alert("Tanks for order");
+}
+</script>
+</head> 
+<body>
+ <h1 class="title">Flowers
+<img src="img/rose.gif" width="110" hight="110"
+alt="picture of organic-farm" title="Runing with these is not recommended." class="float-img"/>
+</h1>
+<div class="topnav" id="myTopnav">
+  <a href="project.html" class="active">HOME</a>
+ <div class="Farming">
+    <button class="farm" >FARMING 
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-cont">
+      <a href="terrace.html">Terrace Farming</a>
+      <a href="garden.html">Garden farming</a>
+     </div>
+  </div> 
+  <div class="Seeds">
+    <button class="seed" >SEEDS
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-co">
+      <a href="veg.html">Vegitables</a>
+      <a href="fruit.html">Fruits</a>
+      <a href="flower.html">Flowers</a>
+     </div>
+  </div> 
+  <a href="inst.html">INSTRUMENTS</a>
+ <a href="fert.html">FERTILIZERS</a>
+  <a href="about.html">ABOUT</a>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>
+</div>
+<div class="masking">
+</div>
+<div class="shop-items"  >
+<div class="shop-item" >
+<h3 class="shop-item-title">orchid</h3>
+<img class="shop-item-image" src="img/orchid.jpg">
+<div class="shop-item-details">
+<h4 class="shop-item-price">RS.50</h4>
+<P class="shop-item-id">ID:01</p>
+</div>
+<div class="quantity">1pack(30 seeds)</div>
+<div class="desc">sutable for: Indoor/Outdoor</div>
+</div>
+<div class="shop-item">
+<h3 class="shop-item-title">firecracker</h3>
+<img class="shop-item-image" src="img/firecracker.jpg"/>
+<div class="shop-item-details">
+<h4 class="shop-item-price">RS.60</h4>
+<p class="shop-item-id">ID:02</P>
+</div>
+<div class="quantity">1pack(35 seeds)</div>
+<div class="desc">sutable for: Indoor/Outdoor</div>
+</div>
+<div class="shop-item">
+<h3 class="shop-item-title">wallichii</h3>
+<img class="shop-item-image" src="img/dombeyawallichii.jpg"/>
+<div class="shop-item-details">
+<h4 class="shop-item-price">RS.55</h4>
+<p class="shop-item-id">ID:03</P>
+</div>
+<div class="quantity">1pack(40 seeds)</div>
+<div class="desc">sutable for: Indoor/Outdoor</div>
+</div>
+<div class="shop-item">
+<h3 class="shop-item-title">climbing rose</h3>
+<img class="shop-item-image" src="img/climbigrose.jpeg"/>
+<div class="shop-item-details">
+<h4 class="shop-item-price">RS.70</h4>
+<p class="shop-item-id">ID:04</P>
+</div>
+<div class="quantity">1pack(45 seeds)</div>
+<div class="desc">sutable for: Indoor/Outdoor</div>
+</div>
+<div class="shop-item">
+<h3 class="shop-item-title">cockscomb</h3>
+<img class="shop-item-image" src="img/cockscomb.jpeg"/>
+<div class="shop-item-details">
+<h4 class="shop-item-price">RS.75</h4>
+<p class="shop-item-id">ID:05</P>
+</div>
+<div class="quantity">1pack(50 seeds)</div>
+<div class="desc">sutable for: Indoor/Outdoor</div>
+</div>
+<div class="shop-item">
+<h3 class="shop-item-title">sunflower</h3>
+<img class="shop-item-image" src="img/sunflower.jpeg"/>
+<div class="shop-item-details">
+<h4 class="shop-item-price">RS.60</h4>
+<p class="shop-item-id">ID:06</P>
+</div>
+<div class="quantity">1pack(40 seeds)</div>
+<div class="desc">sutable for: Indoor/Outdoor</div>
+</div>
+
+<div class="shop-item">
+<h3 class="shop-item-title">cosmos</h3>
+<img class="shop-item-image" src="img/cosmos.jpeg"/>
+<div class="shop-item-details">
+<h4 class="shop-item-price">RS.65</h4>
+<p class="shop-item-id">ID:07</P>
+</div>
+<div class="quantity">1pack(35 seeds)</div>
+<div class="desc">sutable for: Indoor/Outdoor</div>
+</div>
+<div class="shop-item">
+<h3 class="shop-item-title">hollyhock</h3>
+<img class="shop-item-image" src="img/hollyhock.jpeg"/>
+<div class="shop-item-details">
+<h4 class="shop-item-price">RS.75</h4>
+<p class="shop-item-id">ID:08</P>
+</div>
+<div class="quantity">1pack(50 seeds)</div>
+<div class="desc">sutable for: Indoor/Outdoor</div>
+</div>
+<div class="shop-item">
+<h3 class="shop-item-title">marigold</h3>
+<img class="shop-item-image" src="img/marigold.jpeg"/>
+<div class="shop-item-details">
+<h4 class="shop-item-price">RS.50</h4>
+<p class="shop-item-id">ID:09</P>
+</div>
+<div class="quantity">1pack(30 seeds)</div>
+<div class="desc">sutable for: Indoor/Outdoor</div>
+</div>
+<div class="shop-item">
+<h3 class="shop-item-title">portuluca</h3>
+<img class="shop-item-image" src="img/portuluca.jpeg"/>
+<div class="shop-item-details">
+<h4 class="shop-item-price">RS.55</h4>
+<p class="shop-item-id">ID:10</P>
+</div>
+<div class="quantity">1pack(35 seeds)</div>
+<div class="desc">sutable for: Indoor/Outdoor</div>
+</div>
+
+<div class="shop-item">
+<h3 class="shop-item-title">lotus</h3>
+<img class="shop-item-image" src="img/lotus.jpeg"/>
+<div class="shop-item-details">
+<h4 class="shop-item-price">RS.70</h4>
+<p class="shop-item-id">ID:11</P>
+</div>
+<div class="quantity">1pack(50 seeds)</div>
+<div class="desc">sutable for: Indoor/Outdoor</div>
+</div>
+<div class="shop-item">
+<h3 class="shop-item-title">salviabonfire</h3>
+<img class="shop-item-image" src="img/salviabonfire.jpeg"/>
+<div class="shop-item-details">
+<h4 class="shop-item-price">RS.60</h4>
+<p class="shop-item-id">ID:12</P>
+</div>
+<div class="quantity">1pack(40 seeds)</div>
+<div class="desc">sutable for: Indoor/Outdoor</div>
+</div>
+<div class="shop-item">
+<h3 class="shop-item-title">ishika</h3>
+<img class="shop-item-image" src="img/ishikadahlia.jpeg"/>
+<div class="shop-item-details">
+<h4 class="shop-item-price">RS.65</h4>
+<p class="shop-item-id">ID:13</P>
+</div>
+<div class="quantity">1pack(40 seeds)</div>
+<div class="desc">sutable for: Indoor/Outdoor</div>
+</div>
+<div class="shop-item">
+<h3 class="shop-item-title">petunia</h3>
+<img class="shop-item-image" src="img/petunia.jpeg"/>
+<div class="shop-item-details">
+<h4 class="shop-item-price">RS.75</h4>
+<p class="shop-item-id">ID:14</P>
+</div>
+<div class="quantity">1pack(50 seeds)</div>
+<div class="desc">sutable for: Indoor/Outdoor</div>
+</div>
+<div class="shop-item">
+<h3 class="shop-item-title">rainbow rose</h3>
+<img class="shop-item-image" src="img/rainbowrose.jpeg"/>
+<div class="shop-item-details">
+<h4 class="shop-item-price">RS.55</h4>
+<p class="shop-item-id">ID:15</P>
+</div>
+<div class="quantity">1pack(30 seeds)</div>
+<div class="desc">sutable for: Indoor/Outdoor</div>
+</div>
+<div class="shop-item">
+<h3 class="shop-item-title">CannaOrange</h3>
+<img class="shop-item-image" src="img/CannaOrange.jpg"/>
+<div class="shop-item-details">
+<h4 class="shop-item-price">RS.60</h4>
+<p class="shop-item-id">ID:16</P>
+</div>
+<div class="quantity">1pack(35 seeds)</div>
+<div class="desc">sutable for: Indoor/Outdoor</div>
+</div>
+ </div>
+</div>
+<form name="order" id="order">
+    <table>
+        <tr>
+            <td>
+                <label for="productID">Product ID:</label>
+            </td>
+            <td>
+                <input id="productID" name="product" type="text" size="28" required/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="product">Product Desc:</label>
+            </td>
+            <td>
+                <input id="product_desc" name="product" type="text" size="28" required/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="quantity">Quantity:</label>
+            </td>
+            <td>
+                <input id="quantity" name="quantity" width="196px" required/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="price">Price:</label>
+            </td>
+            <td>
+                <input id="price" name="price" size="28" required/>
+            </td>
+        </tr>
+    </table>
+    <input type="reset" name="reset" id="resetbtn" class="resetbtn" value="Reset" />
+    <input type="button" id="btnAddProduct" class="btnAddProduct"  onclick="addProduct();" value="Add New Product" >
+</form>
+<br>
+<p id="demo"></p> <br/>
+<h2> Shopping Cart </h2>
+<p id="demo2"></p>
+<h2>Grand Total:</h2>
+<p id="demo3"></p>
+
+<div class="wrapper">
+    <div class="container">
+        <form action="">
+            <h1>
+                <i class="fas fa-shipping-fast"></i>
+                Shipping Details
+            </h1>
+            <div class="name">
+                <div>
+                    <label for="f-name">First Name</label>
+                    <input type="text" name="f-name">
+                </div>
+                <div>
+                    <label for="l-name">Last Name</label>
+                    <input type="text" name="l-name">
+                </div>
+            </div>
+            <div class="street">
+                <label for="name">Street</label>
+                <input type="text" name="address">
+            </div>
+            <div class="address-info">
+                <div>
+                    <label for="city">City</label>
+                    <input type="text" name="city">
+                </div>
+                <div>
+                    <label for="state">State</label>
+                    <input type="text" name="state">
+                </div>
+                <div>
+                    <label for="zip">Zip</label>
+                    <input type="text" name="zip">
+                </div>
+            </div>
+            <h2>
+                <i class="far fa-credit-card"></i> Payment Information
+            </h2>
+            <div class="cc-num">
+                <label for="card-num">Credit Card No.</label>
+                <input type="text" name="card-num">
+            </div>
+            <div class="cc-info">
+                <div>
+                    <label for="card-num">Exp</label>
+                    <input type="text" name="expire">
+                </div>
+                <div>
+                    <label for="card-num">CCV</label>
+                    <input type="text" name="security">
+                </div>
+            </div>
+<br>
+            <div class="btns">
+                <button onClick="show_alert();">Purchase</button>
+ </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html> 
+
+
+
+

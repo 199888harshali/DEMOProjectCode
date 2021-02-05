@@ -1,0 +1,102 @@
+<!DOCTYPE >
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="abo.css"  />
+<link rel="icon" type="favicon" href="img/favicon.ico"  />
+
+<script type="text/javascript">
+function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
+    }
+}
+var image1= new Image()
+image1.src="img/a1.jpg"
+
+var image2= new Image()
+image2.src="img/a2.jpg"
+
+var image3= new Image()
+image3.src="img/a3.jpg"
+
+var image4= new Image()
+image4.src="img/a4.jpg"
+
+var image5= new Image()
+image5.src="img/a7.jpg"
+
+var image6= new Image()
+image6.src="img/a5.jpg"
+
+var image7= new Image()
+image7.src="img/a6.jpg"
+
+var image8= new Image()
+image8.src="img/a8.jpg"
+</script>
+</head> 
+<body >
+<h1 class="title">About Us
+<img src="img/a9.webp" width="150" hight="150"
+alt="picture of organic-farm" title="Fresh vegitables." class="float-img"/>
+</h1>
+<div class="topnav" id="myTopnav">
+  <a href="project.html" class="active">HOME</a>
+ <div class="Farming">
+    <button class="farm" >FARMING 
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-cont">
+      <a href="terrace.html">Terrace Farming</a>
+      <a href="garden.html">Garden farming</a>
+     </div>
+  </div> 
+  <div class="Seeds">
+    <button class="seed" >SEEDS
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-co">
+      <a href="veg.html">Vegitables</a>
+      <a href="fruit.html">Fruits</a>
+      <a href="flower.html">Flowers</a>
+     </div>
+  </div> 
+  <a href="inst.html">INSTRUMENTS</a>
+ <a href="fert.html">FERTILIZERS</a>
+  <a href="#about">ABOUT</a>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>
+</div>
+<div class="masking">
+</div>
+<b>Our motto</b>
+<p class="moto">Eat Fresh,Live Fresh.</p>
+<img src="img/a1.jpg" name="slideshow"  class="slide" alt="imageslideshow" >
+<script type="text/javascript">
+var numberImage = 1
+function myslide(){
+document.images.slideshow.src=eval("image"+numberImage+".src")
+if(numberImage < 8)
+numberImage = numberImage + 1
+else
+numberImage = 1
+setTimeout("myslide()", 4000)
+}
+myslide()
+</script><br>
+<h2>Happiness</h2>
+<p class="para">According to a study by the University of Exeter Medical School, having regular contact with nature and green spaces in urban areas can help to keep you mentally healthy and aid with your overall happiness.</p>
+<h2>Improvd air quality</h2>
+<p class="para">Green roofs and gardon may also help reduce the distribution of dust in the air and the production of smog, which leads to decreasing greenhouse emissions in urban areas.It is important to note, however, that one green roof and gardon in a city may not have a huge effect all on its own, but larger numbers of roofs in a city could have a noticeably positive impact.</p>
+<h2>Effective use of rainwater</h2>
+<p class="para">Rain is free water and energy we get from the environment, and rooftop gardens are perfect to make the most of it.
+<h2>Urban agriculture</h2>
+<p class="para">With rooftop gardens comes another environmentally friendly and booming initiative – urban agriculture. This involves using green roofs as miniature farms that actually produce fresh food.</p>
+ <h2>Less noise</h2>
+<p class="para">The insulation provided by rooftop gardens not only can be applied to temperatures but also to noise. The combination of soil and plants can help to absorb, reflect, or deflect sound waves, providing the building with excellent noise reduction, particularly for low frequency sounds.</p>
+<h2> Wildlife<h2>
+<p class="para">Other than the different types of bushes, trees, plants, and invertebrates rooftop gardens can harvest, they can also be a perfect habitat for many birds, and act as a stopover for migrating species, allowing two different type of these to come into contact.</p>
+</body>
+</html>
